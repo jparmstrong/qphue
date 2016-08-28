@@ -17,9 +17,8 @@ Update the config.csv with your APIKEY and bridge's hostname/ip address. Also ch
 
 The APIKEY is called *username* in Philips Hue documentation. I make a distinction to not be confused with authentication username.
 
-To start the service, navigate to the root of the project.
-
 ### Run
+Navigate to the root of the project and run the following command:
 ```
 ./run.sh start
 ./run.sh stop
@@ -46,6 +45,11 @@ All functions meant for public usage are in the `.lights` namespace. These funct
 The primary user interface is a [Workflow](https://workflow.is/workflows/6c930f3fc9fb4953ab892005a515d321) "notification widget". A quick swipe down on the iPhone and I have access to my favorite Philip Hue scenes.
 
 ![screen shot of workflow](img/workflow.png)
+
+## Sunset 
+
+Turn your lights on minutes for sunset! See `sunset.q` for more information. Data from [Sunrise Sunset](http://sunrise-sunset.org/)
+
 
 ## Raspberry Pi
 Although not tested, this is the perfect project for using KDB on a RaspPi.

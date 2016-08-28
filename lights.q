@@ -36,7 +36,7 @@
 .lights.changeScene:{
   info"Changing scene to ",x;
   sc:.lights.getScenes[];
-  id:string exec id from first `locked`lastupdated xdesc 0!select from sc where name like (x,"*");
+  id:string exec id from first `lastupdated xdesc 0!select from sc where name like (x,"*");
   if[""~id;info s:"no such scene: ",x;:s];
   PUT["groups/0/action";enlist[`scene]!enlist[id]];
  }
@@ -55,6 +55,8 @@
   info"Turning ON lights";
   PUT["groups/0/action";(enlist`on)!(enlist 1b)];
  }
+
+\l sunset.q
 
 info"qphue started!"
 
