@@ -27,16 +27,17 @@ et:`minute$30
   :r
  }
 
-.sunset.current:.sunset.getSunset[.z.d];
+/ if it's past 8:30pm, get tomorrows sunset
+.sunset.nextSunset:.sunset.getSunset[.z.d+$[.z.T>20:30;1;0]];
 
 .z.ts:{
-  if[.z.P>.sunset.current-et;
-    info"Sunset! ",string[.sunset.current];
+  if[.z.P>.sunset.nextSunset-et;
+    info"Sunset! ",string[.sunset.nextSunset];
     / if lights already on, don't change scene
     if[not max (0!.lights.getLightsInfo[])`on;
       .lights.changeScene["Entrance"];
     ];
-    .sunset.current:.sunset.getSunset[.z.d+1];
+    .sunset.nextSunset:.sunset.getSunset[.z.d+1];
   ];
  };
 
