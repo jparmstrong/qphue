@@ -8,6 +8,7 @@ export LOG_FILE=$LOG_DIR/qphue.log
 export LOG_ARCHIVE_FILE=$LOG_DIR/qphue.archive.log
 export PID_FILE=$LOG_DIR/qphue.pid
 
+cd $DIR
 mkdir -p $LOG_DIR
 
 start () {
@@ -18,7 +19,7 @@ start () {
       return 1
     fi
   fi
-  nohup q lights.q -p $PORT_NUMBER >> $LOG_FILE 2>&1  & 
+  nohup q $DIR/lights.q -p $PORT_NUMBER >> $LOG_FILE 2>&1 &
   echo $! > $PID_FILE
   echo "qphue started!"
 }
