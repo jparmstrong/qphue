@@ -18,8 +18,8 @@ start () {
       return 1
     fi
   fi
-	nohup q lights.q -p $PORT_NUMBER >> $LOG_FILE 2>&1  & 
-	echo $! > $PID_FILE
+  nohup q lights.q -p $PORT_NUMBER >> $LOG_FILE 2>&1  & 
+  echo $! > $PID_FILE
   echo "qphue started!"
 }
 
@@ -28,13 +28,13 @@ stop () {
     echo "No PID file. Must not be running!"
     return 1
   fi
-	local PID=`cat $PID_FILE`
-	kill $PID
-	sleep 1
-	if ps -p $PID > /dev/null ; then
-		echo "qphue ($PID) is still running"
-		kill -9 $PID
-	fi
+  local PID=`cat $PID_FILE`
+  kill $PID
+  sleep 1
+  if ps -p $PID > /dev/null ; then
+    echo "qphue ($PID) is still running"
+    kill -9 $PID
+  fi
   echo "qphue stopped!"
   cat $LOG_FILE >> $LOG_ARCHIVE_FILE
   rm $LOG_FILE
@@ -46,10 +46,10 @@ status () {
     echo "No PID file. Must not be running!"
     exit 1
   fi
-	local PID=`cat $PID_FILE`
+  local PID=`cat $PID_FILE`
   if ps -p $PID > /dev/null ; then
-	  echo "qphue ($PID) is running, tailing log file : $LOG_FILE"
-	  tail $LOG_FILE
+    echo "qphue ($PID) is running, tailing log file : $LOG_FILE"
+    tail $LOG_FILE
   else
     echo "qphue is not running";
   fi
