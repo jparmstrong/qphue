@@ -21,14 +21,13 @@ To start the service, navigate to the root of the project.
 
 ### Run
 ```
-q lights.q -p 8090
-# run with nohup to background the application
-nohup q lights.q -p 8090 &
+./run.sh start
+./run.sh stop
 ```
-`-p` is port open
-
 Open a web browser and go to:
 [http://user:pass@localhost:8090/?.lights.turnOn[]](http://user:pass@localhost:8090/?.lights.turnOn[])
+
+Port number and log directory is set in the `run.sh` file
 
 ### Files
 - `phue.q` - lightweight library that wraps GET, PUT, DELETE commands used to communicate with Hue Bridge.

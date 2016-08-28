@@ -55,3 +55,7 @@
   info"Turning ON lights";
   PUT["groups/0/action";(enlist`on)!(enlist 1b)];
  }
+
+info"qphue started!"
+
+.z.exit:{info"qphue exiting!"}
