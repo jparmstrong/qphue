@@ -1,5 +1,5 @@
 # qphue - KDB+/Q Philips Hue App
-Simple KDB+/Q web application that interacts with Philip's Hue Bridge. It's designed to turn on/off lights, change the scene, and retrieve bridge/light info.
+A simple KDB+/Q web app to control your Philip's Hue Bridge. It's designed to turn on/off lights, change the scene, and retrieve bridge/light info.
 
 It does not implement all the features available in the Philips Hue API.
 
@@ -22,6 +22,8 @@ To start the service, navigate to the root of the project.
 ### Run
 ```
 q lights.q -p 8090
+# run with nohup to background the application
+nohup q lights.q -p 8090 &
 ```
 `-p` is port open
 
