@@ -21,6 +21,15 @@ PUT:{[x;y]
   :r;
  }
 
+POST:{[x;y]
+  p:"POST /api/",.config.apikey,"/",x,"\r\n",
+  "Content-Length: ",string[count s],"\r\n",
+  "Host: ",.config.host,"\r\n\r\n",s:.j.j y;
+  r:(`$":http://",.config.host) p;
+  debug p,"\r\n",r;
+  :r;
+ }
+
 DELETE:{[x]
   p:"DELETE /api/",.config.apikey,"/",x,"\r\n";
   r:(`$":http://",.config.host) p;

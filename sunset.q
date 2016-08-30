@@ -7,10 +7,14 @@ ttz:{[d;s;z]lg[d;gl[s;z]]};
 
 / data from http://sunrise-sunset.org/
 host:"api.sunrise-sunset.org"
+
+/ coordinates for NYC
 lat:40.6944
 lon:-73.9906
 tz:`$"America/New_York"
-et:`minute$30
+
+/ delay sunset by X minutes
+twilightTime:`minute$-20
 
 / returns sunset in local time
 .sunset.getSunset:{[x]
@@ -26,20 +30,3 @@ et:`minute$30
   info "Sunset is at ",string[r];
   :r
  }
-
-/ if it's past 8:30pm, get tomorrows sunset
-.sunset.nextSunset:.sunset.getSunset[.z.d+$[.z.T>20:30;1;0]];
-
-.z.ts:{
-  if[.z.P>.sunset.nextSunset-et;
-    info"Sunset! ",string[.sunset.nextSunset];
-    / if lights already on, don't change scene
-    if[not max (0!.lights.getLightsInfo[])`on;
-      .lights.changeScene["Entrance"];
-    ];
-    .sunset.nextSunset:.sunset.getSunset[.z.d+1];
-  ];
- };
-
-\t 100
-

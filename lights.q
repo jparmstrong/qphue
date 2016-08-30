@@ -16,6 +16,7 @@
 
 / loads auth, logging, GET, PUT, & DELETE functions
 \l phue.q
+\l sunset.q
 
 .lights.getBridgeInfo:{
   :GET"config";
@@ -56,8 +57,28 @@
   PUT["groups/0/action";(enlist`on)!(enlist 1b)];
  }
 
-\l sunset.q
+.lights.setSchedule:{[name;des;dt;scene]
+  c:(`address`method`body)!("/api/",.config.apikey,"/groups/0/action";"PUT";(`body;`scene)!(1b;scene));
+  p:(`name`description`command`localtime)!(name;des;c;-10_ .h.iso8601 dt);
+  POST["schedules";p];
+ }
 
-info"qphue started!"
+.lights.getSchedule:{
+  d:GET"schedules";
+  :1!{d:(`id`autodelete)!(y;0n);d,x[y]}[d] each key d;
+ }
+
+.lights.setSunsetSchedule:{
+  sc:.lights.getSchedule[];
+  if[count lt:exec first localtime from sc where name like "QSunset";
+    info"Sunset schedule already set for ",lt,". Try again tomorrow!";:()];
+  ns:.sunset.getSunset[.z.d]+twilightTime;                                        / plus twilightTime, some people like the lights on before/after sunset
+  if[.z.Z>ns;ns:.sunset.getSunset[.z.d+1]+twilightTime];                          / if today's sunset past, get tomorrows
+  info"Lights set to turn on ",string[`int$twilightTime]," mins before sunset.";
+  .lights.setSchedule["QSunset";"QPhue Sunset";ns;"Entrance"];
+ }
+
+info"qphue started!";
+.lights.setSunsetSchedule[];
 
 .z.exit:{info"qphue exiting!"}
