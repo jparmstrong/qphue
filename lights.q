@@ -34,11 +34,17 @@
   :1!{d:(1#`id)!(1#y);d,x[y]}[d] each key d;
  }
 
-.lights.changeScene:{
-  info"Changing scene to ",x;
+.lights.getScene:{[x]
   sc:.lights.getScenes[];
   id:string exec id from first `lastupdated xdesc 0!select from sc where name like (x,"*");
-  if[""~id;info s:"no such scene: ",x;:s];
+  if[""~id;info s:"no such scene: ",x;:0b];
+  :id;
+ }
+
+.lights.changeScene:{
+  info"Changing scene to ",x;
+  id:.lights.getScene[x];
+  if[0b~id;:()];
   PUT["groups/0/action";enlist[`scene]!enlist[id]];
  }
 
@@ -75,7 +81,8 @@
   ns:.sunset.getSunset[.z.d]+twilightTime;                                        / plus twilightTime, some people like the lights on before/after sunset
   if[.z.Z>ns;ns:.sunset.getSunset[.z.d+1]+twilightTime];                          / if today's sunset past, get tomorrows
   info"Lights set to turn on ",string[`int$twilightTime]," mins before sunset.";
-  .lights.setSchedule["QSunset";"QPhue Sunset";ns;"Entrance"];
+  scid:.lights.getScene["Entrance"];
+  .lights.setSchedule["QSunset";"QPhue Sunset";ns;scid];
  }
 
 info"qphue started!";
