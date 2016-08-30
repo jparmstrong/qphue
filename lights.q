@@ -12,7 +12,8 @@
 
 / sets bridge apikey, bridge hostname and username/password for kdb web api
 .config:()!();
-{.config[x`name]:x`val}each("S*";1#csv) 0:`config.csv;
+{.config[x`name]:x[`type][0]$x`val}each("S**";1#csv) 0:`config.csv;
+.config.twilightTime:`minute$.config.twilightTime;
 
 / loads auth, logging, GET, PUT, & DELETE functions
 \l phue.q
@@ -78,10 +79,10 @@
   sc:.lights.getSchedule[];
   if[count lt:exec first localtime from sc where name like "QSunset";
     info"Sunset schedule already set for ",lt,". Try again tomorrow!";:()];
-  ns:.sunset.getSunset[.z.d]+twilightTime;                                        / plus twilightTime, some people like the lights on before/after sunset
-  if[.z.Z>ns;ns:.sunset.getSunset[.z.d+1]+twilightTime];                          / if today's sunset past, get tomorrows
-  info"Lights set to turn on ",string[`int$twilightTime]," mins before sunset.";
-  scid:.lights.getScene["Entrance"];
+  ns:.sunset.getSunset[.z.d]+.config.twilightTime;                                        / plus twilightTime, some people like the lights on before/after sunset
+  if[.z.Z>ns;ns:.sunset.getSunset[.z.d+1]+.config.twilightTime];                          / if today's sunset past, get tomorrows
+  info"Lights set to turn on ",string[`int$.config.twilightTime]," mins before sunset.";
+  scid:.lights.getScene[.config.sunsetScene];
   .lights.setSchedule["QSunset";"QPhue Sunset";ns;scid];
  }
 
