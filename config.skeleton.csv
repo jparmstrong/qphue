@@ -1,8 +1,8 @@
-name,val
-apikey,ADD YOUR API KEY
-host,philips-hue
-user,user
-pass,pass
+name,type,val
+apikey,*,ADD YOUR API KEY
+host,*,philips-hue
+user,*,user
+pass,*,pass
 tz,S,America/New_York
 lat,F,40.6944
 lon,F,-73.9906
